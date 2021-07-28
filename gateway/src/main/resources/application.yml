@@ -1,0 +1,25 @@
+server:
+  port: 9091
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true       #允许服务发现查找服务
+          lower-case-service-id: true   #小写服务id，进行访问
+      routes:
+        - id: default
+#          uri: lb://
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
